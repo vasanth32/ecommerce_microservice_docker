@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"   # RabbitMQ default port
+      - "15672:15672" # Management interface port
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_password123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  apigateway:
+    build:
+      context: ./ApiGateway
+      dockerfile: Dockerfile
+    ports:
+      - "5010:80"  # API Gateway main port
+    depends_on:
+      - productservice
+      - orderservice
+      - cartservice
+      - userservice
+
+  productservice:
+    build:
+      context: ./ProductService
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"  # Matching API Gateway configuration
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ProductDB;User Id=sa;Password=Your_password123;TrustServerCertificate=True;
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  orderservice:
+    build:
+      context: ./OrderService
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"  # Matching API Gateway configuration
+    depends_on:
+      - rabbitmq
+    environment:
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Port=5672
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+
+  cartservice:
+    build:
+      context: ./CartService
+      dockerfile: Dockerfile
+    ports:
+      - "5003:80"  # Matching API Gateway configuration
+    depends_on:
+      - db
+
+  userservice:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    ports:
+      - "5004:80"  # Matching API Gateway configuration
+    depends_on:
+      - db
+
+  notificationservice:
+    build:
+      context: ./NotificationService
+      dockerfile: Dockerfile
+    ports:
+      - "5005:80"  # Keeping existing port for notification service
+    depends_on:
+      - rabbitmq
+    environment:
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Port=5672
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+
+volumes:
+  sqlserver_data:
+ 
