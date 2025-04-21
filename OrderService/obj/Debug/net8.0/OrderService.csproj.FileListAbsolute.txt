@@ -1,10 +1,3 @@
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.csproj.AssemblyReference.cache
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.GeneratedMSBuildEditorConfig.editorconfig
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.AssemblyInfoInputs.cache
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.AssemblyInfo.cs
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.csproj.CoreCompileInputs.cache
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.MvcApplicationPartsAssemblyInfo.cs
-E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.MvcApplicationPartsAssemblyInfo.cache
 E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\appsettings.Development.json
 E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\appsettings.json
 E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\OrderService.staticwebassets.endpoints.json
@@ -19,6 +12,14 @@ E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\RabbitMQ.Client.dll
 E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\@MicroservicesAws\OrderService\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.csproj.AssemblyReference.cache
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.GeneratedMSBuildEditorConfig.editorconfig
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.AssemblyInfoInputs.cache
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.AssemblyInfo.cs
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.csproj.CoreCompileInputs.cache
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.MvcApplicationPartsAssemblyInfo.cs
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.MvcApplicationPartsAssemblyInfo.cache
+E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\OrderService.sourcelink.json
 E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\scopedcss\bundle\OrderService.styles.css
 E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\staticwebassets.build.json
 E:\@MicroservicesAws\OrderService\obj\Debug\net8.0\staticwebassets.development.json
