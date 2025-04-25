@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductService.Controllers;
 
@@ -7,12 +8,24 @@ namespace ProductService.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private static readonly List<Product> _products = new()
+    private static readonly List<Product> _defaultProducts = new()
     {
         new Product { Id = 1, Name = "Laptop", Description = "High-performance laptop", Price = 999.99m, Quantity = 10, Category = "Electronics" },
         new Product { Id = 2, Name = "Smartphone", Description = "Latest smartphone", Price = 599.99m, Quantity = 15, Category = "Electronics" },
         new Product { Id = 3, Name = "Headphones", Description = "Wireless headphones", Price = 199.99m, Quantity = 20, Category = "Accessories" }
     };
+
+    private readonly List<Product> _products;
+
+    public ProductsController()
+    {
+        _products = new List<Product>(_defaultProducts);
+    }
+
+    public ProductsController(List<Product> initialProducts)
+    {
+        _products = initialProducts;
+    }
 
     // GET: api/products
     [HttpGet]
@@ -46,6 +59,31 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public ActionResult<Product> CreateProduct(Product product)
     {
+        // Validate model
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        // Validate business rules
+        if (_products.Any(p => p.Name.Equals(product.Name, StringComparison.OrdinalIgnoreCase)))
+        {
+            ModelState.AddModelError("Name", "A product with this name already exists.");
+            return BadRequest(ModelState);
+        }
+
+        if (product.Price <= 0)
+        {
+            ModelState.AddModelError("Price", "Price must be greater than 0.");
+            return BadRequest(ModelState);
+        }
+
+        if (product.Quantity < 0)
+        {
+            ModelState.AddModelError("Quantity", "Quantity must be greater than or equal to 0.");
+            return BadRequest(ModelState);
+        }
+
         product.Id = _products.Max(p => p.Id) + 1;
         _products.Add(product);
 
@@ -58,13 +96,39 @@ public class ProductsController : ControllerBase
     {
         if (id != product.Id)
         {
-            return BadRequest();
+            return BadRequest("Product ID mismatch");
+        }
+
+        // Validate model
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
         }
 
         var existingProduct = _products.FirstOrDefault(p => p.Id == id);
         if (existingProduct == null)
         {
             return NotFound();
+        }
+
+        // Validate business rules
+        if (product.Price <= 0)
+        {
+            ModelState.AddModelError("Price", "Price must be greater than 0.");
+            return BadRequest(ModelState);
+        }
+
+        if (product.Quantity < 0)
+        {
+            ModelState.AddModelError("Quantity", "Quantity must be greater than or equal to 0.");
+            return BadRequest(ModelState);
+        }
+
+        // Check for duplicate name (excluding the current product)
+        if (_products.Any(p => p.Id != id && p.Name.Equals(product.Name, StringComparison.OrdinalIgnoreCase)))
+        {
+            ModelState.AddModelError("Name", "A product with this name already exists.");
+            return BadRequest(ModelState);
         }
 
         var index = _products.IndexOf(existingProduct);
