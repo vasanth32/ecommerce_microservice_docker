@@ -20,7 +20,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: vasanthpr
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push Docker Image
@@ -29,4 +29,4 @@ jobs:
           context: ./ProductService
           file: ./ProductService/Dockerfile
           push: true
-          tags: vasanthpr/productservice:latest,vasanthpr/productservice:${{ github.sha }} 
+          tags: ${{ secrets.DOCKER_USERNAME }}/productservice:latest,${{ secrets.DOCKER_USERNAME }}/productservice:${{ github.sha }} 
