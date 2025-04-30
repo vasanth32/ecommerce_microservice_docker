@@ -1,0 +1,58 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker-run: debug",
+            "type": "docker-run",
+            "dependsOn": ["build"],
+            "dockerRun": {
+                "containerName": "productservice-debug",
+                "image": "productservice:dev",
+                "env": {
+                    "ASPNETCORE_ENVIRONMENT": "Development",
+                    "ASPNETCORE_URLS": "http://+:80"
+                },
+                "ports": [
+                    {
+                        "hostPort": 5000,
+                        "containerPort": 80
+                    }
+                ],
+                "volumes": [
+                    {
+                        "localPath": "${workspaceFolder}/ProductService",
+                        "containerPath": "/src",
+                        "permissions": "rw"
+                    }
+                ]
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/ProductService/ProductService.csproj"
+            }
+        },
+        {
+            "label": "docker-compose: debug",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "up": {
+                    "detached": true,
+                    "build": true,
+                    "services": ["productservice"]
+                },
+                "files": [
+                    "${workspaceFolder}/docker-compose.yml"
+                ]
+            }
+        },
+        {
+            "label": "build",
+            "type": "docker-build",
+            "dockerBuild": {
+                "context": "${workspaceFolder}/ProductService",
+                "dockerfile": "${workspaceFolder}/ProductService/Dockerfile",
+                "tag": "productservice:dev",
+                "target": "build"
+            }
+        }
+    ]
+} 

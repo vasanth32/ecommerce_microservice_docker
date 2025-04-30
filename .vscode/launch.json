@@ -1,0 +1,55 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Docker .NET ProductService",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "platform": "netCore",
+            "netCore": {
+                "appProject": "${workspaceFolder}/ProductService/ProductService.csproj",
+                "enableDebugging": true
+            },
+            "dockerServerReadyAction": {
+                "uriFormat": "%s://localhost:%s",
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "containerName": "productservice-debug",
+            "dockerFile": "${workspaceFolder}/ProductService/Dockerfile",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://+:80",
+                "ConnectionStrings__DefaultConnection": "Server=db;Database=ProductDB;User Id=sa;Password=Your_password123;TrustServerCertificate=True;"
+            },
+            "ports": [
+                {
+                    "hostPort": 5000,
+                    "containerPort": 80
+                }
+            ]
+        },
+        {
+            "name": "Docker Compose ProductService",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-compose: debug",
+            "platform": "netCore",
+            "netCore": {
+                "appProject": "${workspaceFolder}/ProductService/ProductService.csproj",
+                "enableDebugging": true
+            },
+            "dockerComposeFile": "${workspaceFolder}/docker-compose.yml",
+            "serviceCommand": "dotnet",
+            "serviceArgs": ["run", "--no-build", "--no-launch-profile", "-c", "Debug"],
+            "serviceName": "productservice",
+            "ports": [
+                {
+                    "hostPort": 5000,
+                    "containerPort": 80
+                }
+            ]
+        }
+    ]
+} 

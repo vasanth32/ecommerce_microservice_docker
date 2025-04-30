@@ -27,6 +27,13 @@ public class ProductsController : ControllerBase
         _products = initialProducts;
     }
 
+    // GET: api/products/defaults
+    [HttpGet("defaults")]
+    public ActionResult<IEnumerable<Product>> GetDefaultProducts()
+    {
+        return _defaultProducts;
+    }
+
     // GET: api/products
     [HttpGet]
     public ActionResult<IEnumerable<Product>> GetProducts([FromQuery] string? category = null)
