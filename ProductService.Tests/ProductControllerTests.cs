@@ -79,15 +79,27 @@ public class ProductControllerTests
     [Fact]
     public void GetProduct_WithValidId_ReturnsProduct()
     {
+        // Arrange
+        var testProduct = new Product
+        {
+            Id = 1,
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 99.99m,
+            Category = "Electronics",
+            Quantity = 10
+        };
+
         // Act
-        var actionResult = _controller.GetProduct(1);
+        var result = _controller.GetProduct(1);
 
         // Assert
-        var result = Assert.IsType<ActionResult<Product>>(actionResult);
-        var product = Assert.IsType<Product>(result.Value);
-        Assert.Equal(1, product.Id);
-        Assert.Equal("Laptop", product.Name);
-        Assert.Equal("Elect                          ronics", product.Category);
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var returnedProduct = Assert.IsType<Product>(okResult.Value);
+        Assert.Equal(testProduct.Id, returnedProduct.Id);
+        Assert.Equal(testProduct.Name, returnedProduct.Name);
+        Assert.Equal(testProduct.Category, returnedProduct.Category);
+        Assert.Equal(testProduct.Price, returnedProduct.Price);
     }
 
     [Fact]

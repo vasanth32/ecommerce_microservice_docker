@@ -20,18 +20,39 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public IActionResult Register(RegisterDto registerDto)
+    public async Task<IActionResult> Register(RegisterDto registerDto)
     {
         try
         {
+            // Register user and generate token synchronously
             var user = _userManager.Register(registerDto);
             var token = _jwtService.GenerateToken(user);
+
+            // Create tasks for simulated operations
+            var emailTask = SimulateSendWelcomeEmailAsync(user);
+            var loggingTask = SimulateLogRegistrationAsync(user);
+
+            // Run both tasks concurrently
+            await Task.WhenAll(emailTask, loggingTask);
+
             return Ok(new { token });
         }
         catch (Exception ex)
         {
             return BadRequest(new { message = ex.Message });
         }
+    }
+
+    private async Task SimulateSendWelcomeEmailAsync(User user)
+    {
+        await Task.Delay(2000); // Simulate network delay
+        Console.WriteLine($"Welcome email sent to {user.Email} at {DateTime.UtcNow}");
+    }
+
+    private async Task SimulateLogRegistrationAsync(User user)
+    {
+        await Task.Delay(1000); // Simulate database write delay
+        Console.WriteLine($"User registration logged for {user.Name} (ID: {user.Id}) at {DateTime.UtcNow}");
     }
 
     [HttpPost("login")]
