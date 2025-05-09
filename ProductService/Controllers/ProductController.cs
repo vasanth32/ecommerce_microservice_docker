@@ -14,7 +14,6 @@ public class ProductsController : ControllerBase
         new Product { Id = 2, Name = "Smartphone", Description = "Latest smartphone", Price = 599.99m, Quantity = 15, Category = "Electronics" },
         new Product { Id = 3, Name = "Headphones", Description = "Wireless headphones", Price = 199.99m, Quantity = 20, Category = "Accessories" }
     };
-
     private readonly List<Product> _products;
 
     public ProductsController()
