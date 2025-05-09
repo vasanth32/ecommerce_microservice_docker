@@ -8,7 +8,6 @@ using System.Linq;
 using Xunit;
 
 namespace ProductService.Tests.Controllers;
-
 public class ProductsControllerTests
 {
     private readonly Mock<ILogger<ProductsController>> _loggerMock;

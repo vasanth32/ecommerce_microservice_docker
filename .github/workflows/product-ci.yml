@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Run Unit Tests
-        run: dotnet test ./ProductService.Tests/ProductService.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+        run: dotnet test ./ProductService.Tests/ProductService.Tests.csproj --configuration Release --logger "trx;LogFileName=test_results.trx"
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
