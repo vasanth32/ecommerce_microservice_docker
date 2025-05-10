@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "94O9wawElAE=",
+  "dgSpecHash": "gWWUPE0Eydk=",
   "success": true,
   "projectFilePath": "E:\\@MicroservicesAws\\ProductService.Tests\\ProductService.Tests.csproj",
   "expectedPackageFiles": [
@@ -83,10 +83,7 @@
     "C:\\Users\\VasanthR\\.nuget\\packages\\xunit.core\\2.7.0\\xunit.core.2.7.0.nupkg.sha512",
     "C:\\Users\\VasanthR\\.nuget\\packages\\xunit.extensibility.core\\2.7.0\\xunit.extensibility.core.2.7.0.nupkg.sha512",
     "C:\\Users\\VasanthR\\.nuget\\packages\\xunit.extensibility.execution\\2.7.0\\xunit.extensibility.execution.2.7.0.nupkg.sha512",
-    "C:\\Users\\VasanthR\\.nuget\\packages\\xunit.runner.visualstudio\\2.5.7\\xunit.runner.visualstudio.2.5.7.nupkg.sha512",
-    "C:\\Users\\VasanthR\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.13\\microsoft.netcore.app.ref.8.0.13.nupkg.sha512",
-    "C:\\Users\\VasanthR\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.13\\microsoft.windowsdesktop.app.ref.8.0.13.nupkg.sha512",
-    "C:\\Users\\VasanthR\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.13\\microsoft.aspnetcore.app.ref.8.0.13.nupkg.sha512"
+    "C:\\Users\\VasanthR\\.nuget\\packages\\xunit.runner.visualstudio\\2.5.7\\xunit.runner.visualstudio.2.5.7.nupkg.sha512"
   ],
   "logs": []
 }

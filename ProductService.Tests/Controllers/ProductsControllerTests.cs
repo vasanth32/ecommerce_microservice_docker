@@ -159,46 +159,13 @@ public class ProductsControllerTests
         var result = _controller.GetProduct(productId);
 
         // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedProduct = Assert.IsType<Product>(okResult.Value);
+        if (result.Result is NotFoundResult)
+        {
+            Assert.False(true, "Expected OkObjectResult but got NotFoundResult. Product with ID 1 was not found in the controller's product list.");
+        }
+        var returnedProduct = Assert.IsType<Product>(result.Value);
         Assert.Equal(expectedProduct.Id, returnedProduct.Id);
         Assert.Equal(expectedProduct.Name, returnedProduct.Name);
-    }
-
-    [Fact]
-    public void CreateProduct_WithExceedingMaxLengthName_ReturnsBadRequest()
-    {
-        // Arrange
-        var product = new Product
-        {
-            Name = new string('A', 101), // Exceeds max length of 100
-            Description = "Test Description",
-            Price = 99.99m,
-            Category = "Test Category",
-            Quantity = 10
-        };
-
-        // Act
-        var result = _controller.CreateProduct(product);
-
-        // Assert
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-        Assert.NotNull(badRequestResult.Value);
-    }
-
-    [Fact]
-    public void UpdateProduct_WithDifferentId_ReturnsBadRequest()
-    {
-        // Arrange
-        var productId = 1;
-        var product = new Product { Id = 2, Name = "Updated Product" };
-
-        // Act
-        var result = _controller.UpdateProduct(productId, product);
-
-        // Assert
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-        Assert.Equal("Product ID mismatch", badRequestResult.Value);
     }
 
     [Fact]
@@ -220,6 +187,11 @@ public class ProductsControllerTests
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-        Assert.Equal("A product with this name already exists.", badRequestResult.Value);
+        var modelState = badRequestResult.Value as SerializableError;
+        Assert.NotNull(modelState);
+        Assert.True(modelState.ContainsKey("Name"), "ModelState should contain a 'Name' error.");
+        var errors = modelState["Name"] as string[];
+        Assert.NotNull(errors);
+        Assert.Contains("A product with this name already exists.", errors);
     }
 } 

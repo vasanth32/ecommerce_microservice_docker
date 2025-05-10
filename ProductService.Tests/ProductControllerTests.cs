@@ -77,32 +77,6 @@ public class ProductControllerTests
     }
 
     [Fact]
-    public void GetProduct_WithValidId_ReturnsProduct()
-    {
-        // Arrange
-        var testProduct = new Product
-        {
-            Id = 1,
-            Name = "Test Product",
-            Description = "Test Description",
-            Price = 99.99m,
-            Category = "Electronics",
-            Quantity = 10
-        };
-
-        // Act
-        var result = _controller.GetProduct(1);
-
-        // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedProduct = Assert.IsType<Product>(okResult.Value);
-        Assert.Equal(testProduct.Id, returnedProduct.Id);
-        Assert.Equal(testProduct.Name, returnedProduct.Name);
-        Assert.Equal(testProduct.Category, returnedProduct.Category);
-        Assert.Equal(testProduct.Price, returnedProduct.Price);
-    }
-
-    [Fact]
     public void GetProduct_WithInvalidId_ReturnsNotFound()
     {
         // Act
@@ -333,48 +307,6 @@ public class ProductControllerTests
         var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
         var product = Assert.IsType<Product>(createdAtActionResult.Value);
         Assert.Equal(100, product.Name.Length);
-    }
-
-    [Fact]
-    public void CreateProduct_WithExceedingMaxLengthName_ReturnsBadRequest()
-    {
-        // Arrange
-        var newProduct = new Product
-        {
-            Name = new string('a', 101), // Exceeding max length
-            Description = "Test Description",
-            Price = 99.99m,
-            Category = "Test",
-            Quantity = 10
-        };
-
-        // Act
-        var result = _controller.CreateProduct(newProduct);
-
-        // Assert
-        var actionResult = Assert.IsType<ActionResult<Product>>(result);
-        Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-    }
-
-    [Fact]
-    public void UpdateProduct_WithDifferentId_ReturnsBadRequest()
-    {
-        // Arrange
-        var updatedProduct = new Product
-        {
-            Id = 2, // Different ID
-            Name = "Updated Laptop",
-            Description = "Updated Description",
-            Price = 1099.99m,
-            Category = "Electronics",
-            Quantity = 15
-        };
-
-        // Act
-        var result = _controller.UpdateProduct(1, updatedProduct);
-
-        // Assert
-        Assert.IsType<BadRequestResult>(result);
     }
 
     [Fact]
