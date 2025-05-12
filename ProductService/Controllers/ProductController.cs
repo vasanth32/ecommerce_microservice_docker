@@ -21,11 +21,6 @@ public class ProductsController : ControllerBase
         _products = new List<Product>(_defaultProducts);
     }
 
-    public ProductsController(List<Product> initialProducts)
-    {
-        _products = initialProducts;
-    }
-
     // GET: api/products/defaults
     [HttpGet("defaults")]
     public ActionResult<IEnumerable<Product>> GetDefaultProducts()

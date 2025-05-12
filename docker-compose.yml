@@ -76,6 +76,8 @@ services:
       - "5004:80"  # Matching API Gateway configuration
     depends_on:
       - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
 
   notificationservice:
     build:

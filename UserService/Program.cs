@@ -41,6 +41,16 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Enable CORS for all origins, headers, and methods
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -73,6 +83,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Use CORS before authentication
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
