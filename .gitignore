@@ -1,0 +1,20 @@
+# Ignore build results
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore logs
+*.log
+logs/
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db 
